@@ -1,4 +1,5 @@
 #!/bin/bash
+set -x
 . ./mqtt_env
 PAYLOAD_FILE=$(mktemp)
 
@@ -6,7 +7,13 @@ SENSOR_NAME=$1
 SENSOR_ID=$2
 MOUNT_SRC=$3
 
-DF_RAW=$(df -h | grep $MOUNT_SRC)
+if [ $# -eq 4 ]; then
+  DF_CMD=$4
+else
+  DF_CMD="df -h"
+fi
+
+DF_RAW=$($DF_CMD | grep $MOUNT_SRC)
 USED_RAW=$(echo $DF_RAW | cut -f3 -d' ')
 USED_UNIT=${USED_RAW: -1}
 USED_VALUE=${USED_RAW::-1}
