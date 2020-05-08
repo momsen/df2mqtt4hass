@@ -1,5 +1,4 @@
 #!/bin/bash
-set -x
 . ./mqtt_env
 PAYLOAD_FILE=$(mktemp)
 
